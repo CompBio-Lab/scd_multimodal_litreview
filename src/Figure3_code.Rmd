@@ -1,0 +1,372 @@
+---
+title: "Figure 3 from A review of multimodal biomarkers for the diagnosis of sudden cardiac death"
+author: "Amrit Singh"
+date: "December 24, 2025"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, warning = FALSE, message = FALSE)
+```
+
+## Setup: Libraries and utilities
+
+```{r, include=FALSE}
+
+library(tidyverse)
+library(tidygraph)
+library(ggraph)
+library(cowplot)
+library(here)
+```
+
+## import Table 2
+
+```{r}
+df <- read.csv(here("data/Table2.csv"))
+```
+
+## plot spec and sens
+
+```{r}
+df2 <- df %>% 
+  mutate(TPR = as.numeric(Sensitivity),
+         FPR = 1 - as.numeric(Specificity),
+         AUC = as.numeric(AUC)) %>% 
+  filter(!is.na(TPR))
+```
+
+## ROC Curve
+
+```{r}
+df3 <- data.frame(FPR=c(0, df2$FPR, 1),
+                  TPR=c(0, df2$TPR, 1))
+
+# order by FPR so curve moves left→right
+df3_ord <- df3 |> arrange(FPR)
+
+# fit LOESS smoother (does NOT go through all points)
+lo <- loess(TPR ~ FPR,
+            data   = df3_ord,
+            span   = 1.7)   # smaller = more wiggly, larger = smoother
+
+# predict on a fine FPR grid from 0 to 1
+grid <- data.frame(FPR = seq(0, 1, length.out = 400))
+grid$TPR_hat <- predict(lo, newdata = grid)
+
+p <- ggplot() +
+  # smooth fitted curve
+  geom_line(data = grid, aes(x = FPR, y = TPR_hat), linewidth = 1.2) +
+  # original points
+  geom_point(data = df3_ord[-c(1, nrow(df3_ord)), ], aes(x = FPR, y = TPR), size = 2) +
+  coord_equal(xlim = c(0, 1), ylim = c(0, 1)) +
+  theme_minimal() +
+  labs(
+    x = "False Positive Rate (1-Specificity)",
+    y = "True Positive Rate (Sensitivity)",
+    title = "ROC Curve"
+  ) +
+  annotate("text", x=0.75, y = 0.25, label=paste0("AUROC = ", signif(mean(df2$AUC, na.rm = TRUE), 2))) +
+  annotate("segment",
+         x = 0, y = 0,
+         xend = 1, yend = 1,
+         linetype = "dashed",
+         color = "gray40",
+         size = 1)
+p
+ggsave(here("results", "Figure3a_roc.png"), height = 4, width = 4)
+```
+
+# metrics
+
+```{r}
+
+p1 <- df2 %>% 
+  gather(metric, value, c("TPR", "FPR", "AUC")) %>% 
+  ggplot(aes(x = Modality, y = value, fill = metric)) +
+  geom_boxplot() +
+    geom_point() +
+  facet_wrap(~metric, ncol = 3) +
+  theme_bw()
+
+comparisons <- list(
+  c("Imaging", "Molecular"),
+  c("Imaging", "Physiological / Electrical"),
+  c("Molecular", "Physiological / Electrical")
+)
+library(ggpubr)
+
+p1 <- df2 %>%
+  dplyr::rename("AUROC" = "AUC") %>% 
+  pivot_longer(c(TPR, FPR, AUROC),
+               names_to = "metric",
+               values_to = "value") %>%
+  ggplot(aes(Modality, value, fill = Modality)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.15, alpha = 0.8) +
+  facet_wrap(~metric, scales = "free_y") +
+  stat_compare_means(
+    comparisons = comparisons,
+    method = "wilcox.test",
+    label = "p.value",
+    bracket.size = 0.5,
+    tip.length = 0.03,
+    size = 5,
+    # CUSTOM y-positions for EACH FACET:
+    # These should be ABOVE your data ranges
+    aes(label = after_stat(p.value))
+  ) +
+  theme_bw() +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+p1
+ggsave(here("results", "Figure3b_boxplots.png"), height = 4, width = 6)
+```
+
+## Network
+
+```{r}
+library(tidyverse)
+library(igraph)
+library(ggraph)
+library(ggrepel)
+
+# -----------------------------
+# 1) Input markers (as given)
+# -----------------------------
+markers <- c(
+  "miR-126-5p",
+  "miR-499a-5p",
+  "miR-3113-5p",
+  "miR-223-3p",
+  "miR-133a-3p",
+  "LMAN2",
+  "CAPN-1",
+  "VCP",
+  "SELENBP1",
+  "VCL",
+  "SELENBP1 + VCL",
+  "L-threonic acid, N-acetyl-L-cysteine, CMPF, glycocholic acid, L-tyrosine, cholic acid, glycoursodeoxycholic acid",
+  "DSC2",
+  "IMA",
+  "Pyruvate + LDHB",
+  "MYH6",
+  "COX5B",
+  "MYH6 + COX5B",
+  "miR-208b-3p",
+  "miR-143-3p",
+  "Early Systolic Lengthening",
+  "Right Ventricular Scalloping Index",
+  "Anterolateral Papillary Muscle Free Strain",
+  "Global Longitudinal Strain",
+  "Main Pulmonary Artery diameter",
+  "Left Ventricular Global/Radial Longitudinal Strain",
+  "Global Circumferential Strain",
+  "ST-segment elevation",
+  "HRV EEMD-entropy",
+  "QRS–T angle",
+  "QTc interval",
+  "Tp-e/QT ratio",
+  "Maximum deflection index",
+  "Hear rate-variability complex",
+  "Standard Deviation of NN intervals",
+  "DC (Deceleration capacity)",
+  "T-wave alternans",
+  "Signal averaged electrocardiogram",
+  "Anger Induced T-wave alternans"
+)
+
+df <- tibble(Marker = markers)
+
+# -----------------------------
+# 2) Modality assignment
+#    (rule-based; edit if needed)
+# -----------------------------
+df <- df %>%
+  mutate(
+    Modality = case_when(
+      str_detect(Marker, "Strain|GLS|GCS|GRS|Systolic|Papillary|Pulmonary Artery|RVSI|LMCA|MPA|LV-|RV-") ~ "Imaging",
+      str_detect(Marker, "HRV|QTc|QRS|Tp-e|TWA|SAECG|ST-segment|deflection|entropy|SDNN|Deceleration|Anger") ~ "Physiological / Electrical",
+      TRUE ~ "Molecular"
+    )
+  )
+
+# -----------------------------
+# 3) Expand composite markers (optional but recommended)
+#    "A + B" -> "A", "B"
+#    metabolites list -> each metabolite
+# -----------------------------
+df_expanded <- df %>%
+  mutate(Marker_orig = Marker) %>%
+  mutate(Marker = str_replace_all(Marker, "\\s*\\+\\s*", ",")) %>%
+  separate_rows(Marker, sep = "\\s*,\\s*") %>%
+  mutate(Marker = str_trim(Marker)) %>%
+  filter(Marker != "")
+
+# -----------------------------
+# 4) Assign each marker to a theme (few super-themes)
+#    (manual map + fallbacks)
+# -----------------------------
+theme_map_marker <- tribble(
+  ~Marker, ~Theme,
+
+  # Vascular/endothelial
+  "miR-126-5p", "Vascular / endothelial & pulmonary remodeling",
+  "miR-143-3p", "Vascular / endothelial & pulmonary remodeling",
+
+  # Injury / remodeling & electromechanical
+  "miR-499a-5p", "Myocardial injury & remodeling",
+  "miR-208b-3p", "Myocardial injury & remodeling",
+  "miR-133a-5p", "Myocardial injury & remodeling",  # (keep if present; otherwise ignored)
+  "miR-133a-3p", "Myocardial injury & remodeling",
+  "miR-223-3p", "Inflammation / immune signaling",
+  "miR-3113-5p", "Inflammation / immune signaling",
+
+  # Proteostasis / stress response
+  "VCP", "Proteostasis / ER stress",
+  "LMAN2", "Proteostasis / ER stress",
+  "CAPN-1", "Proteostasis / ER stress",
+
+  # Structure / mechanics
+  "VCL", "Structural & mechanical dysfunction",
+  "DSC2", "Structural & mechanical dysfunction",
+  "MYH6", "Structural & mechanical dysfunction",
+
+  # Metabolism / ischemia / mitochondria
+  "COX5B", "Ischemia–metabolic / mitochondrial stress",
+  "IMA", "Ischemia–metabolic / mitochondrial stress",
+  "Pyruvate", "Ischemia–metabolic / mitochondrial stress",
+  "LDHB", "Ischemia–metabolic / mitochondrial stress",
+  "SELENBP1", "Ischemia–metabolic / mitochondrial stress",
+  "L-threonic acid", "Ischemia–metabolic / mitochondrial stress",
+  "N-acetyl-L-cysteine", "Ischemia–metabolic / mitochondrial stress",
+  "CMPF", "Ischemia–metabolic / mitochondrial stress",
+  "glycocholic acid", "Ischemia–metabolic / mitochondrial stress",
+  "L-tyrosine", "Ischemia–metabolic / mitochondrial stress",
+  "cholic acid", "Ischemia–metabolic / mitochondrial stress",
+  "glycoursodeoxycholic acid", "Ischemia–metabolic / mitochondrial stress",
+
+  # Imaging mechanics
+  "Early Systolic Lengthening", "Structural & mechanical dysfunction",
+  "Right Ventricular Scalloping Index", "Vascular / endothelial & pulmonary remodeling",
+  "Anterolateral Papillary Muscle Free Strain", "Structural & mechanical dysfunction",
+  "Left Ventricular Global Longitudinal/Radial Strain", "Structural & mechanical dysfunction",
+  "Main Pulmonary Artery diameter", "Vascular / endothelial & pulmonary remodeling",
+
+  # Electrical / ANS
+  "ST-segment elevation", "Electrical instability & repolarization",
+  "QRS–T angle", "Electrical instability & repolarization",
+  "QTc interval", "Electrical instability & repolarization",
+  "Tp-e/QT ratio", "Electrical instability & repolarization",
+  "Maximum deflection index", "Electrical instability & repolarization",
+  "T-wave alternans", "Electrical instability & repolarization",
+  "Signal averaged electrocardiogram", "Electrical instability & repolarization",
+
+  "Hear rate-variability complex", "Autonomic dysregulation",
+  "Standard Deviation of NN intervals", "Autonomic dysregulation",
+  "Deceleration capacity", "Autonomic dysregulation",
+  "HRV EEMD-entropy", "Autonomic dysregulation",
+  "Anger Induced T-wave alternans", "Autonomic dysregulation"
+)
+
+marker_to_theme <- df_expanded %>%
+  left_join(theme_map_marker, by = "Marker") %>%
+  mutate(
+    Theme = case_when(
+      !is.na(Theme) ~ Theme,
+      Modality == "Imaging" ~ "Structural & mechanical dysfunction",
+      Modality == "Physiological / Electrical" ~ "Electrical instability & repolarization",
+      TRUE ~ "Myocardial injury & remodeling"
+    )
+  ) %>%
+  distinct(Marker, Marker_orig, Modality, Theme)
+
+# -----------------------------
+# 5) Theme↔Theme links (to connect the conceptual map)
+#    (edit as you like)
+# -----------------------------
+theme_links <- tribble(
+  ~from, ~to,
+  "Myocardial injury & remodeling", "Structural & mechanical dysfunction",
+  "Structural & mechanical dysfunction", "Electrical instability & repolarization",
+  "Ischemia–metabolic / mitochondrial stress", "Myocardial injury & remodeling",
+  "Ischemia–metabolic / mitochondrial stress", "Electrical instability & repolarization",
+  "Autonomic dysregulation", "Electrical instability & repolarization",
+  "Inflammation / immune signaling", "Myocardial injury & remodeling",
+  "Vascular / endothelial & pulmonary remodeling", "Structural & mechanical dysfunction",
+  "Vascular / endothelial & pulmonary remodeling", "Ischemia–metabolic / mitochondrial stress",
+  "Proteostasis / ER stress", "Myocardial injury & remodeling",
+  "Proteostasis / ER stress", "Ischemia–metabolic / mitochondrial stress"
+) %>% distinct()
+
+# -----------------------------
+# 6) Build nodes + edges
+# -----------------------------
+# Marker nodes
+nodes_marker <- marker_to_theme %>%
+  distinct(name = Marker, Modality) %>%
+  mutate(type = "Marker")
+
+# Theme nodes
+nodes_theme <- marker_to_theme %>%
+  distinct(name = Theme) %>%
+  mutate(type = "Theme", Modality = "Theme")
+
+nodes <- bind_rows(nodes_marker, nodes_theme) %>%
+  distinct(name, .keep_all = TRUE)
+
+# Edges marker->theme + theme<->theme
+edges_marker <- marker_to_theme %>%
+  transmute(from = Marker, to = Theme, edge_type = "marker_theme")
+
+edges_theme <- theme_links %>%
+  transmute(from = from, to = to, edge_type = "theme_theme")
+
+edges <- bind_rows(edges_marker, edges_theme) %>% distinct() %>%
+  mutate(edge_type = as.character(edge_type))
+
+# Graph
+g <- graph_from_data_frame(edges, vertices = nodes, directed = FALSE)
+
+# sanity check: connected components
+igraph::components(g)$no
+# -----------------------------
+# 7) Plot
+# -----------------------------
+set.seed(123)
+p2 <- ggraph(g, layout = "fr") +
+  geom_edge_link(aes(edge_linetype = edge_type), alpha = 0.35) +
+  geom_node_point(aes(color = Modality, shape = type), size = 4) +
+  geom_node_text(aes(label = name), repel = TRUE, size = 3, max.overlaps = Inf) +
+  scale_shape_manual(values = c(Marker = 16, Theme = 15)) +
+  scale_edge_linetype_manual(
+    values = c(marker_theme = "solid", theme_theme = "dashed"),
+    name   = "Edge type"
+  ) +
+  labs(color = "Modality", shape = "Node type") +
+  theme_bw() +
+  theme(
+    axis.title = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank(),
+    panel.border = element_blank(),
+    panel.grid = element_blank()
+  )
+
+
+
+p2
+ggsave(here("results", "Figure3c_network.png"), height = 5, width = 10)
+```
+
+
+
+```{r, fig.height=11, fig.width=15}
+p_p1 <- plot_grid(p, p1, rel_widths = c(0.25, 0.75), labels = c("A", "B"))
+p3 <- plot_grid(p_p1, p2, ncol = 1, rel_heights = c(0.35, 0.65), labels = c("", "C"))
+ggsave(here("results", "scd_network.pdf"), p3, height = 11, width = 15)
+
+p3
+```

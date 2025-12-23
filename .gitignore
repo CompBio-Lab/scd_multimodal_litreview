@@ -1,0 +1,19 @@
+# ---- R / RStudio ----
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# ---- renv ----
+renv/library/
+renv/python/
+renv/staging/
+renv/local/
+renv/.cache/
+
+# knitr / rmarkdown
+*_cache/
+*_files/
+
+# ---- OS ----
+.DS_Store
