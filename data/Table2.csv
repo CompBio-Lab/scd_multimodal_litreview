@@ -1,48 +1,48 @@
-Study,Modality,Marker(s),Type,Clinical Outcome,Sensitivity,Specificity,AUC
-Li 2022,Molecular,miR-126-5p,Cardiac tissue miRNA (RT-qPCR),CAD-related SCD vs traumatic controls,0.8,0.633,0.76
-Li 2022,Molecular,miR-499a-5p,Cardiac tissue miRNA (RT-qPCR),CAD-related SCD vs traumatic controls,0.8,0.8,0.82
-Yan 2021,Molecular,miR-3113-5p,FFPE myocardium miRNA,SCD vs non-cardiac controls,0.6875,0.8333,0.7893
-Yan 2021,Molecular,miR-223-3p,FFPE myocardium miRNA,SCD vs non-cardiac controls,0.8333,0.8889,0.9043
-Yan 2021,Molecular,miR-133a-3p,FFPE myocardium miRNA,SCD vs non-cardiac controls,0.8235,0.9,0.8971
-Yan 2021,Molecular,miR-499a-5p,FFPE myocardium miRNA,SCD vs non-cardiac controls,0.6765,0.7692,0.7851
-Yu 2022,Molecular,LMAN2,Serum ER-stress protein,Early ischemic SCD vs controls,NR,≥0.60,0.8178
-Yu 2022,Molecular,CAPN-1,Serum ER-stress protein,Early ischemic SCD vs controls,NR,≥0.60,0.6988
-Yu 2022,Molecular,VCP,Serum ER-stress protein,Early ischemic SCD vs controls,NR,≥0.60,0.7267
-Lin 2022,Molecular,SELENBP1,Serum protein (clinical),Coronary artery spasm,NR,NR,0.9384
-Lin 2022,Molecular,VCL,Serum protein (clinical),Coronary artery spasm,NR,NR,0.918
-Lin 2022,Molecular,SELENBP1,Serum protein (forensic),SCD due to coronary artery spasm,1,0.7273,NR
-Lin 2022,Molecular,SELENBP1 + VCL,Serum proteins (forensic),SCD due to coronary artery spasm,NR,1,NR
-Ma 2025,Molecular,"L-threonic acid, N-acetyl-L-cysteine, CMPF, glycocholic acid, L-tyrosine, cholic acid, glycoursodeoxycholic acid",Plasma metabolomics (ML),Early ischemia stage identification,NR,NR,0.83
-Ma 2025,Molecular,"L-threonic acid, N-acetyl-L-cysteine, CMPF, glycocholic acid, L-tyrosine, cholic acid, glycoursodeoxycholic acid",Plasma metabolomics (ML),AIHD discrimination,NR,NR,0.99
-Ren 2025,Molecular,DSC2,Myocardial protein (IHC/IF),Arrhythmogenic cardiomyopathy vs controls,NR,NR,0.8017
-Wang 2017,Molecular,IMA,Pericardial fluid biochemical marker,Ischemic cardiac death,0.6,0.805,NR
-Wang 2025,Molecular,Pyruvate + LDHB,Exosomal metabolite + protein (SERS),ACS-linked SCD vs healthy controls,0.9,0.8,0.82
-Song 2024,Molecular,MYH6,Myocardial tissue protein,Sudden unexplained death vs non-cardiac controls,NR,NR,0.803
-Song 2024,Molecular,COX5B,Myocardial tissue protein,Sudden unexplained death vs non-cardiac controls,NR,NR,0.821
-Song 2024,Molecular,MYH6 + COX5B,Myocardial tissue protein,Sudden unexplained death vs non-cardiac controls,0.897,0.844,0.91
-Huang 2023,Molecular,miR-208b-3p,Plasma extracellular vesicle miRNA,ACS patients with SCD vs healthy controls,NR,NR,0.776
-Huang 2023,Molecular,miR-143-3p,Plasma extracellular vesicle miRNA,ACS patients with SCD vs healthy controls,NR,NR,0.778
-Candan 2022,Imaging,Early Systolic Lengthening (ESL) >53.5 msn (milliseconds),Speckle Tracking Echocardiography (STE),Fatal arrhythmic events in HCM patients,0.8,0.6,0.768
-Huang 2024,Imaging,Right Ventricular Scalloping Index (RVSI) ≥1.49,Cardiac MRI (cine CMR),ARVC vs RVOT-VA controls,0.667,0.978,0.91
-Koyuncu 2023,Imaging,Anterolateral Papillary Muscle (ALPM) Free Strain ≥−12.95%,Transthoracic Echocardiography (TTE),SCD risk in HCM vs non-cardiac controls,0.667,0.775,0.766
-Koyuncu 2023,Imaging,Global Longitudinal Strain (GLS) ≥−12.60%,Transthoracic Echocardiography (TTE),SCD risk in HCM vs non-cardiac controls,0.733,0.825,0.787
-Lee 2016,Imaging,Main Pulmonary Artery (MPA) diameter ≥46.5 mm,Transthoracic Echocardiography (TTE),Mechanical complications linked to SCD,0.857,0.586,0.75
-Lee 2017,Imaging,Main Pulmonary Artery diameter measured in the LMCA-oblique view (MPALMobq) ≥45 mm,Cardiac Computed Tomography (CCT),Mechanical complications linked to SCD,0.905,0.692,0.889
-Overhoff 2022,Imaging,"Left Ventricular Global Longitudinal Strain (LV-GLS) ≤−8.2%, Right Ventricular Global Radial Strain (RV-GRS) ≥12.0%",Feature Tracking Cardiac MRI (FT-CMR),Cardiovascular mortality and/or ICD therapy in ICM patients,0.85,0.76,0.833
-Rezaeian 2025,Imaging,Left Ventricular Global Longitudinal Strain (LV GLS) ≥−12.96%,Feature Tracking Cardiac MRI (FT-CMR),Combined adverse outcome in HCM patients,0.78,0.76,0.81
-Rezaeian 2025,Imaging,Left Ventricular Global Radial Strain (LV GRS) ≥42.9%,Feature Tracking Cardiac MRI (FT-CMR),Combined adverse outcome in HCM patients,0.64,0.67,0.65
-Song 2022,Imaging,Global Circumferential Strain (GCS) ≥−8.305%,Feature Tracking Cardiac MRI (FT-CMR),Malignant Ventricular Arrhythmia events,0.796,0.776,0.802
-Song 2022,Imaging,Global Longitudinal Strain (GLS) ≥−8.375%,Feature Tracking Cardiac MRI (FT-CMR),Malignant Ventricular Arrhythmia events,0.778,0.757,0.795
-Song 2022,Imaging,Global Radial Strain (GRS) ≥9.105%,Feature Tracking Cardiac MRI (FT-CMR),Malignant Ventricular Arrhythmia events,0.741,0.692,0.754
-Wang 2023,Physiological / Electrical,ST-segment elevation (STE cutoff 4.5 mV),Electrocardiography (ECG),Malignant Ventricular Arrhythmia events,0.8125,0.9017,0.905
-Shi 2020,Physiological / Electrical,HRV EEMD-entropy + linear features ML classifier,Electrocardiography (ECG),Simulating early detection of imminent SCD,0.975,0.945,NR
-Bekler 2025,Physiological / Electrical,QRS–T angle (cutoff 105.5°),Electrocardiography (ECG),ICD shocks for life-threatening SCD risk,0.736,0.852,0.758
-Bekler 2025,Physiological / Electrical,QTc interval,Electrocardiography (ECG),ICD shocks for life-threatening SCD risk,0.792,0.611,0.726
-Bekler 2025,Physiological / Electrical,Tp-e/QT ratio,Electrocardiography (ECG),ICD shocks for life-threatening SCD risk,0.736,0.655,0.715
-Bekler 2025,Physiological / Electrical,Maximum deflection index,Electrocardiography (ECG),ICD shocks for life-threatening SCD risk,0.717,0.619,0.691
-Song 2014,Physiological / Electrical,HRV (Hear rate-variability) complex,Electrocardiography (ECG),Cardiac death during ≈28-month follow-up,0.8889,0.8021,0.8902
-Song 2014,Physiological / Electrical,SDNN (Standard Deviation of NN intervals),Electrocardiography (ECG),Cardiac death during ≈28-month follow-up,0.5556,0.8663,0.7932
-Song 2014,Physiological / Electrical,DC (Deceleration capacity),Electrocardiography (ECG),Cardiac death during ≈28-month follow-up,0.5556,0.8289,0.7399
-Gold 2000,Physiological / Electrical,TWA (T-wave alternans),T-wave alternans,Composite of sudden cardiac death or ICD therapy,0.778,0.725,NR
-Gold 2000,Physiological / Electrical,SAECG (signal averaged electrocardiogram),signal averaged electrocardiography (SAECG),Composite of sudden cardiac death or ICD therapy,0.556,0.833,NR
-Lampert 2009,Physiological / Electrical,Anger Induced TWA,T-wave alternans,Ventricular tachycardia/ventricular fibrillation requiring ICD therapy,0.6,0.83,NR
+Study,Modality,Marker(s),Type,Clinical Outcome,Outcome category,Sensitivity,Specificity,AUC
+Li 2022,Molecular,miR-126-5p,Cardiac tissue miRNA (RT-qPCR),CAD-related SCD vs traumatic controls,Cause-of-death determination,0.8,0.633,0.76
+Li 2022,Molecular,miR-499a-5p,Cardiac tissue miRNA (RT-qPCR),CAD-related SCD vs traumatic controls,Cause-of-death determination,0.8,0.8,0.82
+Yan 2021,Molecular,miR-3113-5p,FFPE myocardium miRNA,SCD vs non-cardiac controls,Cause-of-death determination,0.6875,0.8333,0.7893
+Yan 2021,Molecular,miR-223-3p,FFPE myocardium miRNA,SCD vs non-cardiac controls,Cause-of-death determination,0.8333,0.8889,0.9043
+Yan 2021,Molecular,miR-133a-3p,FFPE myocardium miRNA,SCD vs non-cardiac controls,Cause-of-death determination,0.8235,0.9,0.8971
+Yan 2021,Molecular,miR-499a-5p,FFPE myocardium miRNA,SCD vs non-cardiac controls,Cause-of-death determination,0.6765,0.7692,0.7851
+Yu 2022,Molecular,LMAN2,Serum ER-stress protein,Early ischemic SCD vs controls,Imminent risk detection,NR,≥0.60,0.8178
+Yu 2022,Molecular,CAPN-1,Serum ER-stress protein,Early ischemic SCD vs controls,Imminent risk detection,NR,≥0.60,0.6988
+Yu 2022,Molecular,VCP,Serum ER-stress protein,Early ischemic SCD vs controls,Cause-of-death determination,NR,≥0.60,0.7267
+Lin 2022,Molecular,SELENBP1,Serum protein (clinical),Coronary artery spasm,Cause-of-death determination,NR,NR,0.9384
+Lin 2022,Molecular,VCL,Serum protein (clinical),Coronary artery spasm,Cause-of-death determination,NR,NR,0.918
+Lin 2022,Molecular,SELENBP1,Serum protein (forensic),SCD due to coronary artery spasm,Cause-of-death determination,1,0.7273,NR
+Lin 2022,Molecular,SELENBP1 + VCL,Serum proteins (forensic),SCD due to coronary artery spasm,Cause-of-death determination,NR,1,NR
+Ma 2025,Molecular,"L-threonic acid, N-acetyl-L-cysteine, CMPF, glycocholic acid, L-tyrosine, cholic acid, glycoursodeoxycholic acid",Plasma metabolomics (ML),Early ischemia stage identification,Cause-of-death determination,NR,NR,0.83
+Ma 2025,Molecular,"L-threonic acid, N-acetyl-L-cysteine, CMPF, glycocholic acid, L-tyrosine, cholic acid, glycoursodeoxycholic acid",Plasma metabolomics (ML),AIHD discrimination,Cause-of-death determination,NR,NR,0.99
+Ren 2025,Molecular,DSC2,Myocardial protein (IHC/IF),Arrhythmogenic cardiomyopathy vs controls,Imminent risk detection,NR,NR,0.8017
+Wang 2017,Molecular,IMA,Pericardial fluid biochemical marker,Ischemic cardiac death,Cause-of-death determination,0.6,0.805,NR
+Wang 2025,Molecular,Pyruvate + LDHB,Exosomal metabolite + protein (SERS),ACS-linked SCD vs healthy controls,Cause-of-death determination,0.9,0.8,0.82
+Song 2024,Molecular,MYH6,Myocardial tissue protein,Sudden unexplained death vs non-cardiac controls,Cause-of-death determination,NR,NR,0.803
+Song 2024,Molecular,COX5B,Myocardial tissue protein,Sudden unexplained death vs non-cardiac controls,Cause-of-death determination,NR,NR,0.821
+Song 2024,Molecular,MYH6 + COX5B,Myocardial tissue protein,Sudden unexplained death vs non-cardiac controls,Primary prevention,0.897,0.844,0.91
+Huang 2023,Molecular,miR-208b-3p,Plasma extracellular vesicle miRNA,ACS patients with SCD vs healthy controls,Primary prevention,NR,NR,0.776
+Huang 2023,Molecular,miR-143-3p,Plasma extracellular vesicle miRNA,ACS patients with SCD vs healthy controls,Cause-of-death determination,NR,NR,0.778
+Candan 2022,Imaging,Early Systolic Lengthening (ESL) >53.5 msn (milliseconds),Speckle Tracking Echocardiography (STE),Fatal arrhythmic events in HCM patients,Primary prevention,0.8,0.6,0.768
+Huang 2024,Imaging,Right Ventricular Scalloping Index (RVSI) ≥1.49,Cardiac MRI (cine CMR),ARVC vs RVOT-VA controls,Primary prevention,0.667,0.978,0.91
+Koyuncu 2023,Imaging,Anterolateral Papillary Muscle (ALPM) Free Strain ≥−12.95%,Transthoracic Echocardiography (TTE),SCD risk in HCM vs non-cardiac controls,Primary prevention,0.667,0.775,0.766
+Koyuncu 2023,Imaging,Global Longitudinal Strain (GLS) ≥−12.60%,Transthoracic Echocardiography (TTE),SCD risk in HCM vs non-cardiac controls,Primary prevention,0.733,0.825,0.787
+Lee 2016,Imaging,Main Pulmonary Artery (MPA) diameter ≥46.5 mm,Transthoracic Echocardiography (TTE),Mechanical complications linked to SCD,Primary prevention,0.857,0.586,0.75
+Lee 2017,Imaging,Main Pulmonary Artery diameter measured in the LMCA-oblique view (MPALMobq) ≥45 mm,Cardiac Computed Tomography (CCT),Mechanical complications linked to SCD,Primary prevention,0.905,0.692,0.889
+Overhoff 2022,Imaging,"Left Ventricular Global Longitudinal Strain (LV-GLS) ≤−8.2%, Right Ventricular Global Radial Strain (RV-GRS) ≥12.0%",Feature Tracking Cardiac MRI (FT-CMR),Cardiovascular mortality and/or ICD therapy in ICM patients,Primary prevention,0.85,0.76,0.833
+Rezaeian 2025,Imaging,Left Ventricular Global Longitudinal Strain (LV GLS) ≥−12.96%,Feature Tracking Cardiac MRI (FT-CMR),Combined adverse outcome in HCM patients,Primary prevention,0.78,0.76,0.81
+Rezaeian 2025,Imaging,Left Ventricular Global Radial Strain (LV GRS) ≥42.9%,Feature Tracking Cardiac MRI (FT-CMR),Combined adverse outcome in HCM patients,Primary prevention,0.64,0.67,0.65
+Song 2022,Imaging,Global Circumferential Strain (GCS) ≥−8.305%,Feature Tracking Cardiac MRI (FT-CMR),Malignant Ventricular Arrhythmia events,Primary prevention,0.796,0.776,0.802
+Song 2022,Imaging,Global Longitudinal Strain (GLS) ≥−8.375%,Feature Tracking Cardiac MRI (FT-CMR),Malignant Ventricular Arrhythmia events,Primary prevention,0.778,0.757,0.795
+Song 2022,Imaging,Global Radial Strain (GRS) ≥9.105%,Feature Tracking Cardiac MRI (FT-CMR),Malignant Ventricular Arrhythmia events,Primary prevention,0.741,0.692,0.754
+Wang 2023,Physiological / Electrical,ST-segment elevation (STE cutoff 4.5 mV),Electrocardiography (ECG),Malignant Ventricular Arrhythmia events,Imminent risk detection,0.8125,0.9017,0.905
+Shi 2020,Physiological / Electrical,HRV EEMD-entropy + linear features ML classifier,Electrocardiography (ECG),Simulating early detection of imminent SCD,Imminent risk detection,0.975,0.945,NR
+Bekler 2025,Physiological / Electrical,QRS–T angle (cutoff 105.5°),Electrocardiography (ECG),ICD shocks for life-threatening SCD risk,Primary prevention,0.736,0.852,0.758
+Bekler 2025,Physiological / Electrical,QTc interval,Electrocardiography (ECG),ICD shocks for life-threatening SCD risk,Primary prevention,0.792,0.611,0.726
+Bekler 2025,Physiological / Electrical,Tp-e/QT ratio,Electrocardiography (ECG),ICD shocks for life-threatening SCD risk,Primary prevention,0.736,0.655,0.715
+Bekler 2025,Physiological / Electrical,Maximum deflection index,Electrocardiography (ECG),ICD shocks for life-threatening SCD risk,Primary prevention,0.717,0.619,0.691
+Song 2014,Physiological / Electrical,HRV (Hear rate-variability) complex,Electrocardiography (ECG),Cardiac death during ≈28-month follow-up,Primary prevention,0.8889,0.8021,0.8902
+Song 2014,Physiological / Electrical,SDNN (Standard Deviation of NN intervals),Electrocardiography (ECG),Cardiac death during ≈28-month follow-up,Primary prevention,0.5556,0.8663,0.7932
+Song 2014,Physiological / Electrical,DC (Deceleration capacity),Electrocardiography (ECG),Cardiac death during ≈28-month follow-up,Primary prevention,0.5556,0.8289,0.7399
+Gold 2000,Physiological / Electrical,TWA (T-wave alternans),T-wave alternans,Composite of sudden cardiac death or ICD therapy,Primary prevention,0.778,0.725,NR
+Gold 2000,Physiological / Electrical,SAECG (signal averaged electrocardiogram),signal averaged electrocardiography (SAECG),Composite of sudden cardiac death or ICD therapy,Primary prevention,0.556,0.833,NR
+Lampert 2009,Physiological / Electrical,Anger Induced TWA,T-wave alternans,Ventricular tachycardia/ventricular fibrillation requiring ICD therapy,Imminent risk detection,0.6,0.83,NR
